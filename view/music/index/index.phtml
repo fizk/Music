@@ -49,7 +49,7 @@
 			</article>
 		</div>
 		<div class="column">
-			<form >
+			<form class="search">
 				<input type="search" placeholder="Search..." />
 			</form>
 			<h1><?=$this->value->decoded;?></h1>
@@ -61,7 +61,10 @@
 				<?php endforeach;?>
 			</ul>
 		</div>
-		<ul>
+	</div>
+	<div>
+		<h1>All years in database</h1>
+		<ul class="years-list">
 			<?php foreach($this->range as $item): ?>
 			<li>
 				<a href="/music/<?=$item->year?>"><?=$item->year?></a>

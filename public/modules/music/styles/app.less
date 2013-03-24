@@ -5,6 +5,12 @@
 		background: @color-background-body;
 		color: @color-text;
 	}
+	a{
+		color: darken(@color-border-header,20%);
+	}
+	a:hover{
+		color: darken(@color-border-header,30%);
+	}
 	[draggable] {
 		-moz-user-select: none;
 		-khtml-user-select: none;
@@ -41,6 +47,25 @@
 	div.music-wrapper{
 		max-width: 960px;
 		margin: 0 auto;
+	}
+
+
+/* - - - - [ INDEX ] - - - - - - - - - - - - - - - - - - - - - - - - - -*/
+
+	form.search{
+		input[type=search],
+		input[type=text]{
+			background: url(images/search-icon.png) no-repeat white 0 center;
+			border: none;
+			text-indent: 86px;
+			padding: @padding;
+			font-size: 18/16em;
+			width:  percentage( ((960/2) - (@padding*2) ) / (960/2) );
+		}
+	}
+
+	ul.years-list{
+		.columns(12);
 	}
 
 

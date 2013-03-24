@@ -20,6 +20,15 @@
 
 
 /* - - - - - - [MIXIN] - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+	.columns( @count:3 ){
+		-webkit-column-count: @count;
+		   -moz-column-count: @count;
+		    -ms-column-count: @count;
+		     -o-column-count: @count;
+		        column-count: @count;
+	}
+
 	.clearfix(){
 		content: " ";
 		display: table;
