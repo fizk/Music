@@ -1,0 +1,20 @@
+<?php
+	$this->headLink(array(
+        'rel' => "stylesheet/less",
+        'type' => "text/css",
+        'href' => "/modules/music/styles/app.less"
+	));
+?>
+
+
+<div class="music-wrapper">
+	<h1><?=$this->value->decoded?></h1>
+
+
+	<ul>
+		<?php foreach($this->collection as $item):?>
+		<li><?=$item->year;?> | <?=$item->score;?></li>
+		<?php endforeach;?>
+	</ul>
+
+</div>

@@ -1,0 +1,33 @@
+<?php
+	$this->headLink(array(
+        'rel' => "stylesheet/less",
+        'type' => "text/css",
+        'href' => "/modules/music/styles/app.less"
+	));
+?>
+
+<div class="music-wrapper">
+
+	<nav>
+		<ul>
+			<li><a href="/music/<?=$this->range->previous;?>">&laquo; <?=$this->range->previous?></a></li>
+			<li> |
+				<?=$this->range->from?>
+				<?php if($this->range->to):?>
+				<?=$this->range->to?>
+				<?php endif;?> |
+			</li>
+			<li><a href="/music/<?=$this->range->next;?>"><?=$this->range->next?> &raquo;</a></li>
+		</ul>
+	</nav>
+	
+	
+	
+
+	<ul>
+		<?php foreach($this->collection as $item): ?>
+		<li><?=$item->score ?> | <a href="/music/<?=urlencode($item->artist);?>"><?=$item->artist ?></a></li>
+		<?php endforeach;?>
+	</ul>
+
+</div>

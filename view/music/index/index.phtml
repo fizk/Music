@@ -1,0 +1,72 @@
+<?php
+	/*
+	$this->headScript()
+		->appendFile("/modules/whiteboard/scripts/tools.js")
+		->appendFile("/modules/whiteboard/scripts/managers.js")
+		->appendFile("/modules/whiteboard/scripts/app.js");
+	*/
+	$this->headLink(array(
+        'rel' => "stylesheet/less",
+        'type' => "text/css",
+        'href' => "/modules/music/styles/app.less"
+	));
+?>
+
+<div class="music-wrapper">
+	<div class="row half">
+		<div class="column">
+			<article>
+				<header>
+					<hgroup>
+						<h1>Music</h1>
+					</hgroup>
+					<section>
+						<p>Lorem ipsum in sint et sed cillum adipisicing sint ex ex est 
+							veniam laboris do officia in laborum dolor consectetur tempor 
+							consequat Excepteur sed consectetur labore amet mollit officia ut 
+							non id amet. </p>
+						<p>Lorem ipsum ullamco id velit mollit Duis cupidatat eiusmod nisi non 
+							exercitation in. </p>
+						<h1>Sub headline</h1>
+						<p>Lorem ipsum in sint et sed cillum adipisicing sint ex ex est 
+							veniam laboris do officia in laborum dolor consectetur tempor 
+							consequat Excepteur sed consectetur labore amet mollit officia ut 
+							non id amet. Lorem ipsum in sint et sed cillum adipisicing sint ex ex 
+							est veniam laboris do officia in laborum dolor consectetur tempor 
+							consequat Excepteur sed consectetur labore amet mollit officia ut 
+							non id amet. </p>
+						<p>Lorem ipsum ullamco id velit mollit Duis cupidatat eiusmod nisi non 
+							exercitation in. </p>
+						<h2>Sub sub headline</h2>
+						<p>Lorem ipsum in sint et sed cillum adipisicing sint ex ex est 
+							veniam laboris do officia in laborum dolor consectetur tempor 
+							consequat Excepteur sed consectetur labore amet mollit officia ut 
+							non id amet. </p>
+						<p>Lorem ipsum ullamco id velit mollit Duis cupidatat eiusmod nisi non 
+							exercitation in. </p>
+					</section>
+				</header>
+			</article>
+		</div>
+		<div class="column">
+			<form >
+				<input type="search" placeholder="Search..." />
+			</form>
+			<h1><?=$this->value->decoded;?></h1>
+			<ul>
+				<?php foreach($this->collection as $item): ?>
+				<li>
+					<?=$item->year?> - <?=$item->score?>
+				</li>
+				<?php endforeach;?>
+			</ul>
+		</div>
+		<ul>
+			<?php foreach($this->range as $item): ?>
+			<li>
+				<a href="/music/<?=$item->year?>"><?=$item->year?></a>
+			</li>
+			<?php endforeach;?>
+		</ul>
+	</div>
+</div>
