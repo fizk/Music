@@ -10,6 +10,9 @@ use Zend\View\Model\JsonModel;
 
 class IndexController extends AbstractRestfulController{
 	
+    /**
+     * Home / landing page
+     */
 	public function indexAction(){
         return new ViewModel(array(
             'value' => (object)array(
@@ -17,10 +20,10 @@ class IndexController extends AbstractRestfulController{
                 'decoded' => "The Beatles",
             ),
             'collection' => $this->getServiceLocator()
-                ->get('Music\Model\Music')->fetchProfile("The Beatles"),
+                ->get('Music\Service\Music')->get("The Beatles"),
                 
             'range' => $this->getServiceLocator()
-                ->get('Music\Model\Music')->fetchYears()
+                ->get('Music\Service\Music')->years()
             )
         );
 	}
@@ -37,7 +40,7 @@ class IndexController extends AbstractRestfulController{
                 'next' => ((int)$this->params()->fromRoute('from',2011))+1,
             ),
             'collection' => $this->getServiceLocator()
-                ->get('Music\Model\Music')->fetchRange(
+                ->get('Music\Service\Music')->fetch(
                     $this->params()->fromRoute('from', null),
                     $this->params()->fromRoute('to', null)
                 )
@@ -60,7 +63,7 @@ class IndexController extends AbstractRestfulController{
     			'decoded' 	=> urldecode($this->params()->fromRoute('name', null)),
     		),
             'collection' => $this->getServiceLocator()
-                ->get('Music\Model\Music')->fetchProfile(
+                ->get('Music\Service\Music')->get(
                     urldecode($this->params()->fromRoute('name', null)),
                 	$this->params()->fromRoute('type', null)
                 )
@@ -72,6 +75,30 @@ class IndexController extends AbstractRestfulController{
         }else{
             return new ViewModel($data);
         }
+    }
+
+    /**
+     * Search the database for an artist
+     */
+    public function searchAction(){
+        $data = array(
+            'value' => (object)array(
+                'raw'       => $this->params()->fromRoute('name', null),
+                'decoded'   => urldecode($this->params()->fromRoute('name', null)),
+            ),
+            'collection' => $this->getServiceLocator()
+                ->get('Music\Service\Music')->find(
+                    urldecode($this->params()->fromRoute('name', null))
+                )
+            );
+
+
+        if(preg_match("/application\/json/", $this->getRequest()->getHeader("Accept")->getFieldValue())){
+            return new JsonModel($data);
+        }else{
+            return new ViewModel($data);
+        }
+
     }
 
     public function get($id){}

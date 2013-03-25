@@ -41,6 +41,19 @@ return array(
 						'action' => 'index'
 					)
 				),
+			),			
+			/**
+			 * ROOT
+			 */
+			'music-search' => array(
+				'type' => 'segment',
+				'options' => array(
+					'route' => '/music/search/:name',
+					'defaults' => array(
+						'controller' => 'Music\Controller\Index',
+						'action' => 'search'
+					)
+				),
 			),
 			/**
 			 *

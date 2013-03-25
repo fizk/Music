@@ -19,7 +19,7 @@ class Module{
 	public function getServiceConfig(){
 		return array(
 			'factories' => array(
-				'Music\Model\Music' => function($sm){
+				'Music\Service\Music' => function($sm){
 					$config = $sm->get('config');
 					$pdo = new PDO(
 						$config['database_music']['dns'],
@@ -27,7 +27,7 @@ class Module{
 						$config['database_music']['password'],
 						$config['database_music']['driver_options']
 					);
-					$service = new Music($pdo);
+					$service = new \Music\Service\Music($pdo);
 					return $service;
 				},
 			)

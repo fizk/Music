@@ -68,6 +68,61 @@
 		.columns(12);
 	}
 
+	ul#index-artist-score{
+		ul{
+			margin: 0 0 0 @margin*4;
+		}
+	}
+
+
+	dl.api{
+		dt{
+			font-weight: bold;
+		}
+		dd{
+			margin: @margin*2 0 @margin*4 @margin*2;
+			ul{
+				margin: @margin 0 @margin @margin*2;
+			}
+			pre{
+				font-size: 12/16em;
+			}
+		}
+
+	}
+
+	pre{
+		background: lighten(@color-background-body,2%);
+		padding: @padding;
+		span.numeric{
+			color: blue;
+		}
+		span.string{
+			color: green;
+		}
+		span.keyword{
+			color: blue;
+		}
+	}
+
+
+
+
+.chart {
+  font-size: 12/16em;
+  shape-rendering: crispEdges;
+}
+
+
+
+.chart rect {
+  stroke: @color-background-body;
+  fill: @color-border-header;
+}
+
+.chart text.bar {
+  fill: white;
+}
 
 
 

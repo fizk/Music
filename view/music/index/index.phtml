@@ -1,6 +1,7 @@
 <?php
 	
 	$this->headScript()
+		->appendFile("/modules/music/scripts/d3.v3.min.js")
 		->appendFile("/modules/music/scripts/app.js");
 	
 	$this->headLink(array(
@@ -19,29 +20,122 @@
 						<h1>Music</h1>
 					</hgroup>
 					<section>
-						<p>Lorem ipsum in sint et sed cillum adipisicing sint ex ex est 
-							veniam laboris do officia in laborum dolor consectetur tempor 
-							consequat Excepteur sed consectetur labore amet mollit officia ut 
-							non id amet. </p>
-						<p>Lorem ipsum ullamco id velit mollit Duis cupidatat eiusmod nisi non 
-							exercitation in. </p>
-						<h1>Sub headline</h1>
-						<p>Lorem ipsum in sint et sed cillum adipisicing sint ex ex est 
-							veniam laboris do officia in laborum dolor consectetur tempor 
-							consequat Excepteur sed consectetur labore amet mollit officia ut 
-							non id amet. Lorem ipsum in sint et sed cillum adipisicing sint ex ex 
-							est veniam laboris do officia in laborum dolor consectetur tempor 
-							consequat Excepteur sed consectetur labore amet mollit officia ut 
-							non id amet. </p>
-						<p>Lorem ipsum ullamco id velit mollit Duis cupidatat eiusmod nisi non 
-							exercitation in. </p>
-						<h2>Sub sub headline</h2>
-						<p>Lorem ipsum in sint et sed cillum adipisicing sint ex ex est 
-							veniam laboris do officia in laborum dolor consectetur tempor 
-							consequat Excepteur sed consectetur labore amet mollit officia ut 
-							non id amet. </p>
-						<p>Lorem ipsum ullamco id velit mollit Duis cupidatat eiusmod nisi non 
-							exercitation in. </p>
+						<h1>API</h1>
+						<p>The data is accessable through a RESTfull API</p>
+						<p>It will return an HTML string wich is not very accessable
+							unless you place this in your header request</p>
+						<p><code>Accept: application/json</code></p>
+						<dl class="api">
+							<dt>/music</dt>
+							<dd>
+								<p>Entry point</p>
+							</dd>
+
+							<dt>/music/:from[/:to]</dt>
+							<dd>
+								<p>Get score in a time range. From year to year. To get a single year you
+									can ommit the <code>:to</code> parameter or make the <code>:from</code>
+									and <code>:to</code> values the same.</p>
+								<ul>
+									<li>:from - [0-9]{4}</li>
+									<li>:to - [0-9]{4}</li>
+								</ul>
+								<p>This will return:</p>
+								<pre>
+{
+	"range":{
+		"previous":<span class="numeric">2003</span>,
+		"from":<span class="numeric">2004</span>,,
+		"to":<span class="numeric">0</span>,,
+		"next":<span class="numeric">2005</span>,
+	},
+	"collection":[
+		{
+			"artist":"<span class="string">Usher</span>",
+			"name":<span class="keyword">null</span>,
+			"type":<span class="keyword">null</span>,
+			"year":<span class="numeric">2004</span>,
+			"score":<span class="numeric">23.000</span>,
+		},{
+			...
+		}
+	]
+}
+								</pre>
+								<p>The <code>range</code> attribute is for discoverability. It will tell you
+									which other year values are available. (previous and next). The <code>from</code>
+									is the value that you provided in the request</p>
+								<p>If the <em>:to</em> parameter is not provided, it will be <code>0</code> in
+									the <code>range</code> literal.</p>
+								<p>The <code>collection</code> attribute contains an array of artists ordered
+									by <code>score</code>.</p>
+								<p>An object in this array has a <code>name</code> attribute, it is provided for 
+									consistency but it is always <code>null</code> since this object is a
+									sum of many <code>name</code>s.</p>
+								<p>The same thing goes for <code>type</code>, it is provided for consistency
+									but will always be <code>null</code>.</p>
+							</dd>
+
+							<dt>/music/:name[:/type]</dt>
+							<dd>
+								<p>Get profile of an artist.</p>
+								<ul>
+									<li>:name - .*</li>
+									<li>:type - (albums|songs|both)</li>
+								</ul>
+								<p>The <code>:name</code> parameter can be a string that
+									contains valid URL characters. You should aways URLencode
+									this string</p>
+								<p>Optionally you can provide a <code>:type</code>, which can be
+									<em>albums</em>, <em>songs</em> or <em>both</em>. Providing 
+									<em>both</em> is the same as ommtting the value. This will tell
+									the the service to sum up albums, songs or both.</p>
+								<pre>
+{
+	"value":{
+		"raw":"<span class="string">Usher</span>",
+		"decoded":"<span class="string">Usher</span>",
+	},
+	"collection":[
+		{
+			"artist":"<span class="string">Usher</span>",
+			"name":"<span class="keyword">null</span>",
+			"type":"<span class="keyword">null</span>",
+			"year":"<span class="numeric">1994</span>",
+			"score":"<span class="keyword">0.344</span>",
+			"collection":[{
+				"name": "<span class="string">I Will Come to You</span>",
+				"type": "<span class="string">song</span>",
+				"score": "<span class="keyword">2.483</span>",
+				"notes": "<span class="string">...</span>"
+			},{
+				...
+			}]
+		},{
+			...
+		}
+	]
+}
+								</pre>
+								<p>The <code>value</code> attribte contains the aparameter passed in
+									as well as the same string URL decoded.</p>
+								<p>The <code>collection</code> atrivute is an array of artist objects.</p>
+								<p>The <code>name</code> attribute will always be <code>null</code> since
+									this is a sum of many <code>name</code>s.</p>
+								<p>If the <code>:type</code> parameter is provided in the request, the
+									<code>type</code> attribute will be the singular version of that type, 
+									else it will be <code>null</code>.</p>
+							</dd>
+
+							<dt>/music/search/:q</dt>
+							<dd>
+								<p>Search request</p>
+								<ul>
+									<li>:q - .*</li>
+								</ul>
+							</dd>
+
+						</dl>	
 					</section>
 				</header>
 			</article>
@@ -51,13 +145,19 @@
 				<input type="search" placeholder="Search..." />
 			</form>
 			<h1 id="index-artist-name"><?=$this->value->decoded;?></h1>
-			<ul id="index-artist-score">
+			<div id="chart"></div>
+			<!--ul id="index-artist-score">
 				<?php foreach($this->collection as $item): ?>
 				<li>
 					<?=$item->year?> - <?=$item->score?>
+					<ul>
+						<?php foreach($item->collection as $col):?>
+						<li><?=$col->score?> | <?=$col->name?> (<?=$col->type?>)</li>
+						<?php endforeach;?>
+					</ul>
 				</li>
 				<?php endforeach;?>
-			</ul>
+			</ul-->
 		</div>
 	</div>
 	<div>

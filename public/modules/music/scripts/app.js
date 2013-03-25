@@ -1,8 +1,84 @@
 
 ;(function(){
+/*
+var data = [4, 8, 15, 16, 23, 42];
+var y = d3.scale.ordinal()
+    .domain(data)
+    .rangeBands([0, 120]);
+var x = d3.scale.linear()
+    .domain([0, d3.max(data)])
+    .range(["0px", "420px"]);
+var chart = d3.select("#chart").append("svg")
+    .attr("class", "chart")
+    .attr("width", 420)
+    .attr("height", 120);
+
+chart.selectAll("rect")
+    .data(data)
+  .enter().append("rect")
+    .attr("y", y)
+    .attr("width", x)
+    .attr("height", y.rangeBand());
+
+chart.selectAll("text")
+    .data(data)
+  .enter().append("text")
+    .attr("class", "bar")
+    .attr("x", x)
+    .attr("y", function(d) { return y(d) + y.rangeBand() / 2; })
+    .attr("dx", -3)
+    .attr("dy", ".35em")
+    .attr("text-anchor", "end")
+    .text(String);
+*/
 
 
+	document.addEventListener("DOMContentLoaded",function(event){
 
+		var xhr = new XMLHttpRequest();
+			xhr.open('get','/music/' + encodeURIComponent("The Beatles"));
+			xhr.setRequestHeader ("Accept", "application/json");
+			xhr.addEventListener("load",function(event){
+
+				var data = JSON.parse(event.target.responseText).collection;
+
+				var y = d3.scale.ordinal()
+    				.domain(data.map(function(d){return d.score*5;}))
+				    .rangeBands([0, 960/2]);
+
+				var x = d3.scale.linear()
+				    .domain([0, d3.max( data.map(function(d){return d.score*5;}) )])
+				    .range(["0px", "820px"]);
+
+				var chart = d3.select("#chart").append("svg")
+				    .attr("class", "chart")
+				    .attr("width", 960/2)
+				    .attr("height", data.length*20);
+
+				chart.selectAll("rect")
+				    .data(data)
+				  .enter().append("rect")
+				    .attr("y", function(d, i) { return i * 20; })
+				    .attr("width", function(x,i){return x.score*5;}  )
+				    .attr("height", y.rangeBand());
+				   /*
+				chart.selectAll("text")
+				    .data(data)
+				  .enter().append("text")
+				    .attr("class", "bar")
+				    .attr("x", function(x){return x.score*10;} )
+				    .attr("y", function(d) { return y(d.score*10) + y.rangeBand() / 2; })
+				    .attr("dx", -3)
+				    .attr("dy", ".35em")
+				    .attr("text-anchor", "end")
+				    .text(function(d){return d.year});
+				    */
+			},false);
+			xhr.send();
+
+	},false);
+
+/*
 	document.addEventListener("DOMContentLoaded",function(event){
 
 
@@ -41,6 +117,6 @@
 		console.log(event);
 	},false);
 
-
+*/
 
 })();

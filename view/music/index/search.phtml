@@ -1,0 +1,16 @@
+<?php
+	$this->headLink(array(
+        'rel' => "stylesheet/less",
+        'type' => "text/css",
+        'href' => "/modules/music/styles/app.less"
+	));
+?>
+<div class="music-wrapper">
+
+	<h1><?= $this->value->decoded;?> (<?=count($this->collection);?>)</h1>
+	<ul>
+		<?php foreach($this->collection as $item):?>
+		<li><a href="/music/<?=urlencode($item->artist)?>"><?=$item->artist?></a></li>
+		<?php endforeach;?>
+	</ul>
+</div>
